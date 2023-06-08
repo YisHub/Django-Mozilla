@@ -1,5 +1,7 @@
 from django.db import models
 import uuid
+from django.urls import reverse
+import random
 
 # Create your models here.
 class Genre(models.Model):
@@ -26,6 +28,11 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000, help_text="Ingrese una breve descripción del libro")
 
     genre = models.ManyToManyField(Genre, help_text="Seleccione un genero para este libro")
+
+    isbn = models.CharField('ISBN', max_length=13, unique=True, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>*Si no se proporciona un ISBN, se generará uno aleatoriamente de 13 dígitos.*', default=''.join([str(random.randint(0, 9)) for _ in range(13)]))
+
+
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
 
