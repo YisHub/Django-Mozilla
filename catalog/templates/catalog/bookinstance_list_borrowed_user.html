@@ -4,14 +4,17 @@
     <h1>Borrowed books</h1>
 
     {% if bookinstance_list %}
+    {% for bookinst in bookinstance_list %}
     <ul>
-
-      {% for bookinst in bookinstance_list %}
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
-      </li>
-      {% endfor %}
+      <div class="list-group">
+        <div class="btn-group ">
+          <a class="list-group-item-action list-group-item d-flex justify-content-between align-items-start  " href="{% url 'book-detail' bookinst.book.pk %}" role="button"
+            >{{bookinst.book.title}}  <small class=" {% if bookinst.is_overdue %}text-danger{% endif %}">{{ bookinst.due_back }}</small> </a>
+  
+        </div>
+      </div>
     </ul>
+    {% endfor %}
 
     {% else %}
       <p>There are no books borrowed.</p>

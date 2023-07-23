@@ -7,13 +7,17 @@
     <ul>
 
       {% for bookinst in bookinstance_list %}
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})-{{ bookinst.borrower.username }}- <a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>  
 
-       
+      <div class="list-group ">
+        <div class="btn-group ">
+          <a class=" list-group-item-action list-group-item d-flex justify-content-between align-items-start btn btn-group " href="{% url 'book-detail' bookinst.book.pk %}" role="button"
+          disabled>Link<small class="{% if bookinst.is_overdue %}text-danger{% endif %}" >{{ bookinst.due_back }} / {{ bookinst.borrower.username }}</small> </a>
+            <a href="{% url 'renew-book-librarian' bookinst.id %}"" class="btn btn-outline-primary" role="button" data-bs-toggle="button">Renew</a>
+        </div>
+      </div>
 
-      </li>
       {% endfor %}
+
     </ul>
 
     {% else %}

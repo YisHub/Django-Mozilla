@@ -4,22 +4,33 @@
   <h1>Author List</h1>
 
   {% if author_list %}
-    <ul>
-      {% for author in author_list %}
-        <li>
-          <a href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>
+    {% for author in author_list %}
+    <ul class="list-unstyled">
+      
+        <li>     
+          <div class="list-group">
+            <div class="btn-group">
+              <a class="list-group-item list-group-item-action btn btn-group " href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>
           {% if perms.catalog.can_mark_returned %}
-            - <a href="{% url 'author_update' author.id %}" style="color: green;">Update</a>
-            - <a href="{% url 'author_delete' author.id %}" style="color: red;">Delete</a>
-          {% endif %}
+          <button type="button" class="list-group-item btn btn-group dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'author_update' author.id %}" class="dropdown-item">Update</a></li>
+            <li><a href="{% url 'author_delete' author.id %}" class="dropdown-item">Delete</a></li>
+          </ul>
+          {% endif %}              
+            </div>
+          </div>
         </li>
-      {% endfor %}
+      
     </ul>
+    {% endfor %}
   {% else %}
     <p>There are no authors in the library.</p>
   {% endif %}
 
   {% if perms.catalog.can_mark_returned %}
-    <a href="{% url 'author_create' %}">Author Create</a>
+    <a href="{% url 'author_create' %}" class="btn btn-outline-secondary" >Author Create</a>
   {% endif %}
 {% endblock %}
